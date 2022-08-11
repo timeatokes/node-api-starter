@@ -72,7 +72,7 @@ export default class UsersService {
     const deletedUser = await UsersDal.deleteUser(userId)
     
     if (!deletedUser) {
-      return ResponseFactory.createNotFoundError()
+      return ResponseFactory.createInternalServerError()
     }
 
     return ResponseFactory.createResponse(deletedUser)
