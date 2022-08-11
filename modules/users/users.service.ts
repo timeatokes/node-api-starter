@@ -72,7 +72,6 @@ export default class UsersService {
     const user = await UsersDal.getUserById(userId)
     
     if (!user) {
-      console.log('error')
       return ResponseFactory.createNotFoundError()
     }
     
