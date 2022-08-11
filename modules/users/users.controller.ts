@@ -3,7 +3,7 @@
 // - validating those parameters
 // - Generating the Swagger Documentation
 
-import { Request, Response, Tags, Route, Get, Post, Body, Path } from 'tsoa'
+import { Request, Response, Tags, Route, Get, Post, Body, Path, Delete } from 'tsoa'
 import { Request as ExpressRequest } from 'express'
 import {
   ControllerResponse,
@@ -56,4 +56,16 @@ export default class UsersController {
   ): Promise<ControllerResponse<string | ControllerError>> {
     return await UsersService.logInUser(userDetails)
   }
+
+  @Delete('/{userId}')
+  @Response<{ message: ErrorMessageCode.NOT_FOUND }>(404, 'Not Found')
+  @Response<{ message: ErrorMessageCode.INTERNAL_SERVER_ERROR }>(500, 'Server Error')
+  public static async deleteUser(
+    @Request() _request: ExpressRequest,
+    @Path() userId: string
+  ): Promise<ControllerResponse<IUserModel | ControllerError>> {
+    return await UsersService.deleteUser(userId)
+  }
 }
+
+  

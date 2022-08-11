@@ -12,9 +12,8 @@ export default class UsersDal {
       const users = await UserModel.find();
       return users;
     } catch (error) {
-      console.log(error);
+      return null;
     }
-    return null;
   }
 
   public static async getUserById(userId: string): Promise<IUserModel | null> {
@@ -22,9 +21,8 @@ export default class UsersDal {
       const user = await UserModel.findById(new ObjectId(userId));
       return user;
     } catch (error) {
-      console.log(error);
+      return null;
     }
-    return null;
   }
 
   public static async getUserByEmail(email: string): Promise<IUserModel | null> {
@@ -32,20 +30,18 @@ export default class UsersDal {
       const user = await UserModel.findOne({email: email});
       return user;
     } catch (error) {
-      console.log(error);
+      return null;
     }
-    return null;
   }
 
-  public static async addNewUser(userDetails: IUserModel): Promise<IUserModel | null> { // The ID would normally be added by the DB engine
+  public static async addNewUser(userDetails: IUserModel): Promise<IUserModel | null> {
     try {
       const user = new UserModel({...userDetails});
       const newUser = await user.save();
       return newUser;
     } catch (error) {
-      console.log(error);
+      return null;
     }
-    return null;
   }
 
   public static async getUserPasswordByEmail(email: string): Promise<string | null> {
@@ -56,8 +52,16 @@ export default class UsersDal {
       }
       return null;
     } catch (error) {
-      console.log(error);
+      return null;
     }
-    return null;
+  }
+
+  public static async deleteUser(userId: string): Promise<IUserModel | null> {
+    try {
+      const deletedUser = await UserModel.findByIdAndDelete(new ObjectId(userId));
+      return deletedUser;
+    } catch (error) {
+      return null;
+    }
   }
 }
