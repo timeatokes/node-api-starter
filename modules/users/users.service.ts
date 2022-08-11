@@ -69,6 +69,13 @@ export default class UsersService {
   }
 
   public static async deleteUser(userId: string): Promise<ControllerResponse<IUserModel | ControllerError>> {
+    const user = await UsersDal.getUserById(userId)
+    
+    if (!user) {
+      console.log('error')
+      return ResponseFactory.createNotFoundError()
+    }
+    
     const deletedUser = await UsersDal.deleteUser(userId)
     
     if (!deletedUser) {
