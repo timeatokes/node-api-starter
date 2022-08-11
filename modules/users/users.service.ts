@@ -67,4 +67,14 @@ export default class UsersService {
 
     return ResponseFactory.createResponse('Unsuccesful login')
   }
+
+  public static async deleteUser(userId: string): Promise<ControllerResponse<IUserModel | ControllerError>> {
+    const deletedUser = await UsersDal.deleteUser(userId)
+    
+    if (!deletedUser) {
+      return ResponseFactory.createNotFoundError()
+    }
+
+    return ResponseFactory.createResponse(deletedUser)
+  }
 }

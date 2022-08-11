@@ -24,4 +24,10 @@ router.post('/login', async (req: Request, res: Response) => {
   res.status(statusCode).send(body)
 })
 
+router.delete('/:userId', async (req: Request, res: Response) => {
+  const { userId } = req.params
+  const { statusCode, body } = await UsersController.deleteUser(req, userId)
+  res.status(statusCode).send(body)
+})
+
 export default router
